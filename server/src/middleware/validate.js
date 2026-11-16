@@ -12,5 +12,10 @@ function checkField(name, rule, raw) {
         return { skip: true };
     }
 
-    
+    const type = rule.type || 'string';
+    let value = raw;
+
+    if (type === 'string' || type === 'email' || type === 'objectId') {
+        if (typeof value !== 'string') return { error: `${name} must be text` };
+    }
 }
