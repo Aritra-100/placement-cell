@@ -75,3 +75,24 @@ function checkField(name, rule, raw) {
 
     return { value };
 }
+
+export function validate(schema, source = 'body') {
+    return (req, res, next) => {
+        const input = req[source] || {};
+        const clean = {};
+        const details = [];
+
+        for (const [name, rule] of Object.entries(schema)) {
+            const result = checkField(name, rule, input[name]);
+            if (result.error) details.push({ field: name, message: result.error });
+            else if (!result.skip) clean[name] = result.value;
+        }
+
+        if (details.length > 0) {
+            return next(ApiError.validation('Validation failed', { details }));
+        }
+
+    req.valid = { ...(req.valid || {}), [source]: clean };
+    next();
+  };
+}
