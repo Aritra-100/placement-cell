@@ -58,5 +58,20 @@ function checkField(name, rule, raw) {
         if (rule.maxItems && value.length > rule.maxItems) {
             return { error: `${name} can have atmost ${maxItems} items` };
         }
+        const cleaned = [];
+        for (const item of value) {
+            const r = checkField(`${name} item`, { type: rule.items || 'string', required: true, maxLength: rule.itemMaxLength }, item);
+            if (r.error) return { error: r.error };
+            cleaned.push(r.value);
+        }
+        value = cleaned;
     }
+    else {
+        throw new Error(`Unknown validation type: ${type}`);
+    }
+    if (rule.enum && !rule.enum.includes(value)) {
+        return { error: `${name} must be one of: ${rule.enum.join(', ')}` };
+    }
+
+    return { value };
 }
