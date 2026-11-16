@@ -35,4 +35,12 @@ function checkField(name, rule, raw) {
             return { error: rule.patternMessage || `${name} has an invalid format` };
         }
     }
+    else if (type === 'number') {
+        value = typeof value === 'string' ? Number(value) : value;
+        if (typeof value !== 'number' || !Number.isFinite(value)) {
+            return { error: `${name} must be a number` };
+        }
+        if (rule.min !== undefined && value < rule.min) return { error: `${name} must be at least ${rule.min}` };
+        if (rule.max !== undefined && value > rule.max) return { error: `${name} must be at most ${rule.max}` };
+    }
 }
