@@ -43,4 +43,20 @@ function checkField(name, rule, raw) {
         if (rule.min !== undefined && value < rule.min) return { error: `${name} must be at least ${rule.min}` };
         if (rule.max !== undefined && value > rule.max) return { error: `${name} must be at most ${rule.max}` };
     }
+    else if (type === 'boolean') {
+        if (value === 'true') value = true;
+        else if (value === 'false') value = false;
+        if (typeof value !== 'boolean') return { error: `${name} must be true or false` };
+    }
+    else if (type === 'date') {
+        const d = new Date(value);
+        if (Number.isNaN(d.getTime())) return { error: `${name} must be a valid date` };
+        value = d;
+    }
+    else if (type === 'array') {
+        if (!Array.isArray(value)) return { error: `${name} must be a list` };
+        if (rule.maxItems && value.length > rule.maxItems) {
+            return { error: `${name} can have atmost ${maxItems} items` };
+        }
+    }
 }
