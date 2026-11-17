@@ -84,3 +84,8 @@ export async function refresh(rawToken) {
 
     return issueToken(user);
 }
+
+export async function logout(rawToken) {
+    if (!rawToken) return;
+    await RefreshToken.deleteOne({ tokenHash: hashToken(rawToken) });
+}
