@@ -89,3 +89,9 @@ export async function logout(rawToken) {
     if (!rawToken) return;
     await RefreshToken.deleteOne({ tokenHash: hashToken(rawToken) });
 }
+
+export async function getMe(userId) {
+    const user = await User.findById(userId);
+    if (!user) throw ApiError.notFound('User not found');
+    return user;
+}
