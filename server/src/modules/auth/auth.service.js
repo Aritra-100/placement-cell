@@ -52,3 +52,18 @@ export async function register({ name, email, password, role }) {
     const user = await User.create({ name, email, passwordHash, role });
     return user;
 }
+
+export async function login({ email, password }) {
+    const user = await User.findOne({ email }).select('+passwordHash');
+
+    const ok = await bcrypt.compare(password, user ? user.passwordHash : DUMMY_HASH);
+    if (!user || !ok) throw ApiError.unauthorized(INVALID_LOGIN);
+
+    if (user.status !== 'active') throw ApiError.forbidden('Account disabled');
+
+    user.lastLoginAt = new Date();
+    await user.save();
+
+    const tokens = await issueToken(user);
+    return { user, ...tokens };
+}
