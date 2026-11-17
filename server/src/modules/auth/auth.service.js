@@ -67,3 +67,20 @@ export async function login({ email, password }) {
     const tokens = await issueToken(user);
     return { user, ...tokens };
 }
+
+export async function refresh(rawToken) {
+    if (!rawToken) throw ApiError.unauthorized('No refresh token');
+
+    const tokenHash = hashToken(rawToken);
+    const stored = await RefreshToken.findOneAndDelete({ tokenHash }); 
+    if (!stored || stored.expiresAt < new Date()) {
+        throw ApiError.unauthorized('Session expired, please log in again');
+    }
+
+    const user = await User.findById(stored.userId);
+    if (!user || user.status !== 'active') {
+        throw ApiError.unauthorized('Session expired, please log in again');
+    }
+
+    return issueToken(user);
+}
