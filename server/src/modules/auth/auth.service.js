@@ -43,3 +43,12 @@ async function issueToken(user) {
 
     return { accessToken, refreshToken, refreshExpiresAt };
 }
+
+export async function register({ name, email, password, role }) {
+    const existing = await User.exists({ email });
+    if (existing) throw ApiError.conflict('An account with this email already exists');
+
+    const passwordHash = await bcrypt.hash(password, env.BCRYPT_COST);
+    const user = await User.create({ name, email, passwordHash, role });
+    return user;
+}
