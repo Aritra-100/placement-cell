@@ -23,3 +23,23 @@ const hashToken = (token) => {
         return undefined;
     }
 }
+
+async function issueToken(user) {
+    const companyId = user.role === 'recruiter' ? await getCompanyId(user) : undefined;
+
+    const accessToken = jwt.sign({ role: user.role, companyId }, env.JWT_ACCESS_SECRET, {
+        subject: String(user._id),
+        expiresIn: env.JWT_ACCESS_EXPIRES,
+    });
+
+    const refreshToken = crypto.randomBytes(48).toString('hex');
+    const refreshExpiresAt = new Date(Date.now() + parseDuration(env.JWT_ACCESS_EXPIRES));
+
+    await RefreshToken.create({
+        userId: user._id,
+        tokenHash: hashToken(refreshToken),
+        expiresAt: refreshExpiresAt,
+    });
+
+    return { accessToken, refreshToken, refreshExpiresAt };
+}
