@@ -13,3 +13,8 @@ function setReferenceCookie(res, token, expiresAt) {
         expires: expiresAt,
     });
 }
+
+export const register = asyncHandler(async (req, res) => {
+    const user = await authService.register(req.valid.body);
+    res.status(201).json({ data: { user } });
+});
