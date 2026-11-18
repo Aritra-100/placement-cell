@@ -4,7 +4,7 @@ import * as authService from './auth.service';
 
 const COOKIE_NAME = 'refreshToken';
 
-function setReferenceCookie(res, token, expiresAt) {
+function setRefreshCookie(res, token, expiresAt) {
     res.cookie(COOKIE_NAME, token, {
         httpOnly: true,
         secure: env.isProd,
@@ -23,4 +23,5 @@ export const login = asyncHandler(async (req, res) => {
     const { user, accessToken, refreshToken, refreshExpiresAt } = await authService.login(req.valid.body);
     setRefreshCookie(res, refreshToken, refreshExpiresAt);
     res.json({ data: { user, accessToken } });
-}); 
+});
+
