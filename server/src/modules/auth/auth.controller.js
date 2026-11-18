@@ -18,3 +18,9 @@ export const register = asyncHandler(async (req, res) => {
     const user = await authService.register(req.valid.body);
     res.status(201).json({ data: { user } });
 });
+
+export const login = asyncHandler(async (req, res) => {
+    const { user, accessToken, refreshToken, refreshExpiresAt } = await authService.login(req.valid.body);
+    setRefreshCookie(res, refreshToken, refreshExpiresAt);
+    res.json({ data: { user, accessToken } });
+}); 
