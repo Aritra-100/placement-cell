@@ -36,3 +36,8 @@ export const logout = asyncHandler(async (req, res) => {
     res.clearCookie(COOKIE_NAME, { path: '/api/v1/auth' });
     res.status(204).end();
 });
+
+export const me = asyncHandler(async (req, res) => {
+    const user = await authService.getMe(req.user.id);
+    res.json({ data: { user } });
+});
