@@ -25,3 +25,8 @@ export const login = asyncHandler(async (req, res) => {
     res.json({ data: { user, accessToken } });
 });
 
+export const refresh = asyncHandler(async (req, res) => {
+    const { accessToken, refreshToken, refreshExpiresAt } = await authService.refresh(req.cookies[COOKIE_NAME]);
+    setRefreshCookie(res, refreshToken, refreshExpiresAt);
+    res.json({ data: { accessToken } });
+});
