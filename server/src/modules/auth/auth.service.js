@@ -1,10 +1,10 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import crypto from 'node:crypto';
-import { env } from '../../config/env';
-import { ApiError } from '../../utils/APIError';
-import { User } from './auth.model';
-import { RefreshToken } from './refreshToken.model';
+import { env } from '../../config/env.js';
+import { ApiError } from '../../utils/APIError.js';
+import { User } from './auth.model.js';
+import { RefreshToken } from './refreshToken.model.js';
 
 const DUMMY_HASH = bcrypt.hashSync('not-a-real-password', env.BCRYPT_COST);
 

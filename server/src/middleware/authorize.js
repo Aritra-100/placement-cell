@@ -1,4 +1,4 @@
-import { ApiError } from "../utils/APIError";
+import { ApiError } from "../utils/APIError.js";
 
 export const authorize = (...allowedRoles) => (req, res, next) => {
     if (!req.user) return next(ApiError.unauthorized());

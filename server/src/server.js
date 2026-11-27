@@ -1,7 +1,7 @@
-import { env } from "./config/env";
-import { logger } from "./config/logger";
-import { connectDB, disconnectDB } from './config/db';
-import { app } from "./app";
+import { env } from './config/env.js';
+import { logger } from "./config/logger.js";
+import { connectDB, disconnectDB } from './config/db.js';
+import { app } from "./app.js";
 
 await connectDB();
 const server = app.listen(env.PORT, () => logger.info(`API listening on port ${env.PORT}`));

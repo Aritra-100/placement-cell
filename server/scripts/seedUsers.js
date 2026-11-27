@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
-import { env } from '../src/config/env';
-import { connectDB, disconnectDB } from '../src/config/db';
-import { User } from '../src/modules/auth/auth.model';
+import { env } from '../src/config/env.js';
+import { connectDB, disconnectDB } from '../src/config/db.js';
+import { User } from '../src/modules/auth/auth.model.js';
 
 const password = process.env.SEED_PASSWORD || 'Change123';
 

@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
-import { env } from '../config/env';
-import { ApiError } from '../utils/APIError';
+import { env } from '../config/env.js';
+import { ApiError } from '../utils/APIError.js';
 
 export function authenticate(req, res, next) {
     const header = req.headers.authorization || '';

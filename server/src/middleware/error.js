@@ -1,6 +1,6 @@
-import { ApiError } from "../utils/APIError";
-import { logger } from "../config/logger";
-import { env } from "../config/env";
+import { ApiError } from "../utils/APIError.js";
+import { logger } from "../config/logger.js";
+import { env } from "../config/env.js";
 
 export function notFound(req, res, next) {
     next(ApiError.notFound(`Route not found: ${req.method} ${req.originalUrl}`));

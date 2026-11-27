@@ -1,4 +1,4 @@
-import { ApiError } from "../utils/APIError";
+import { ApiError } from "../utils/APIError.js";
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const OBJECT_ID = /^[a-f\d]{24}$/i;
