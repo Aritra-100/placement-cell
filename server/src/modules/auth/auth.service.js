@@ -33,7 +33,7 @@ async function issueToken(user) {
     });
 
     const refreshToken = crypto.randomBytes(48).toString('hex');
-    const refreshExpiresAt = new Date(Date.now() + parseDuration(env.JWT_ACCESS_EXPIRES));
+    const refreshExpiresAt = new Date(Date.now() + parseDuration(env.JWT_REFRESH_EXPIRES));
 
     await RefreshToken.create({
         userId: user._id,
