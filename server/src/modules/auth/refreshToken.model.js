@@ -6,9 +6,8 @@ const refreshTokenSchema = new mongoose.Schema(
         tokenHash: { type: String, required: true, unique: true },
         expiresAt: { type: Date, required: true },
     },
-    { timestamp: true }
+    { timestamps: true }
 );
 
-refreshTokenSchema.index({ expiresAt: 1 }, { expiresAfterSeconds: 0 });
-
+refreshTokenSchema.index({ expiresAt: 1 }, { expireAfterSeconds: 0 });
 export const RefreshToken = mongoose.model('RefreshToken', refreshTokenSchema);
