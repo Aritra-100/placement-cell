@@ -17,11 +17,11 @@ function parseDuration(text) {
     return Number(match[1]) * units[match[2]];
 }
 
-const hashToken = (token) => {
+const hashToken = (token) =>
     crypto.createHmac('sha256', env.JWT_REFRESH_SECRET).update(token).digest('hex');
-    async function getCompanyId(user) {
-        return undefined;
-    }
+
+async function getCompanyId(user) {
+    return undefined;
 }
 
 async function issueToken(user) {
